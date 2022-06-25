@@ -23,6 +23,7 @@ first_time = True
 
 def url_to_name(url):
     string_list = url.split('/')
+    print(url)
     return string_list[2]
 
 
@@ -74,8 +75,9 @@ try:
                 new_window_name = url_to_name(get_chrome_url())
         if sys.platform in ['linux', 'linux2']:
             new_window_name = l.get_active_window_x()
-            if 'Google Chrome' in new_window_name:
-                new_window_name = l.get_chrome_url_x()
+            if new_window_name:
+                if 'Google Chrome' in new_window_name:
+                    new_window_name = l.get_chrome_url_x()
 
         
         if active_window_name != new_window_name:
