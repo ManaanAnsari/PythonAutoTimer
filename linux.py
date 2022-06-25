@@ -14,6 +14,7 @@ def get_active_window_raw():
     root = subprocess.Popen(
         ['xprop', '-root', '_NET_ACTIVE_WINDOW'], stdout=subprocess.PIPE)
     stdout, stderr = root.communicate()
+    # print("stdout1",stdout)
 
     m = re.search(b'^_NET_ACTIVE_WINDOW.* ([\w]+)$', stdout)
     if m != None:
@@ -21,6 +22,7 @@ def get_active_window_raw():
         window = subprocess.Popen(
             ['xprop', '-id', window_id, 'WM_NAME'], stdout=subprocess.PIPE)
         stdout, stderr = window.communicate()
+        # print("stdout2",stdout)
     else:
         return None
 
@@ -33,6 +35,7 @@ def get_active_window_raw():
         ret is bytes for python3 (- gives error while calling in other file)
         be careful
         '''
+        # print("ret",ret)
         return ret
     return None
 
@@ -54,17 +57,17 @@ uncomment the below lines for linux - works - but activities won't be dumped in 
 
 # run()
 def get_chrome_url_x():
-        ''' 
-        instead of url the name of the website and the title of the page is returned seperated by '/' 
-        '''
-        detail_full = get_active_window_raw()
-        if detail_full:
-            detail_full = detail_full.decode("utf-8") 
-        detail_list = detail_full.split(' - ')
-        detail_list.pop()
-        detail_list = detail_list[::-1]
-        _active_window_name = 'Google Chrome -> ' + " / ".join(detail_list)
-        return _active_window_name
+    ''' 
+    instead of url the name of the website and the title of the page is returned seperated by '/' 
+    '''
+    detail_full = get_active_window_raw()
+    if detail_full:
+        detail_full = detail_full.decode("utf-8") 
+    detail_list = detail_full.split(' - ')
+    detail_list.pop()
+    detail_list = detail_list[::-1]
+    _active_window_name = 'Google Chrome -> ' + " / ".join(detail_list)
+    return _active_window_name
 
 def get_active_window_x():
     full_detail = get_active_window_raw()
