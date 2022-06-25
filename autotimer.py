@@ -14,6 +14,9 @@ elif sys.platform in ['Mac', 'darwin', 'os2', 'os2emx']:
 elif sys.platform in ['linux', 'linux2']:
         import linux as l
 
+from helper import get_file_name
+
+
 active_window_name = ""
 activity_name = ""
 start_time = datetime.datetime.now()
@@ -98,7 +101,7 @@ try:
                 if not exists:
                     activity = Activity(activity_name, [time_entry])
                     activeList.activities.append(activity)
-                with open('activities.json', 'w') as json_file:
+                with open(get_file_name(), 'w') as json_file:
                     json.dump(activeList.serialize(), json_file,
                               indent=4, sort_keys=True)
                     start_time = datetime.datetime.now()
@@ -108,5 +111,5 @@ try:
         time.sleep(1)
     
 except KeyboardInterrupt:
-    with open('activities.json', 'w') as json_file:
+    with open(get_file_name(), 'w') as json_file:
         json.dump(activeList.serialize(), json_file, indent=4, sort_keys=True)
